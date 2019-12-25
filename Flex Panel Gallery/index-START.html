@@ -44,7 +44,7 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
-      flex: 1;
+      flex: 1;    /* takes the space evenly */
       justify-content: center;
       align-items: center;
       display: flex;
@@ -65,7 +65,14 @@
       flex: 1 0 auto;
       display: flex;
       justify-content: center;
+      align-items: center;
     }
+
+/* manipulating flex text*/
+    .panel > *:first-child{transform: translateY(-100%);}
+    .panel.open-active > *:first-child{transform: translateY(0);} /*when open active class introduces*/
+    .panel > *:last-child{transform: translateY(100%);}
+    .panel.open-active > *:first-child{transform: translateY(0);}
 
     .panel p {
       text-transform: uppercase;
@@ -80,6 +87,7 @@
 
     .panel.open {
       font-size: 40px;
+      flex: 5; /*Takes extra room then usual when open*/
     }
 
   </style>
@@ -114,7 +122,22 @@
   </div>
 
   <script>
+    const panels = document.querySelectorAll('.panel');
 
+    function toggleOpen(){
+      this.classList.toggle('open');
+    }
+/*After transition end of toggleOpen, toggleActive will be triggered*/
+     function toggleActive(e) {
+      console.log(e.propertyName);
+      if (e.propertyName.includes('flex')) { /*if propertyname includes word flex. Safari have property flex-box.*/
+        this.classList.toggle('open-active');
+      }
+    }
+
+    panels.forEach(panel => panel.addEventListener('click',toggleOpen)); /*when click event happen call toggleOpen function*/
+
+    panels.forEach(panel => panel.addEventListener('transitionend',toggleActive)); 
   </script>
 
 
