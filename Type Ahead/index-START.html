@@ -24,6 +24,42 @@ fetch(endpoint)
 .then(blob => blob.json())  //json is an inbuilt method
 .then(data => cities.push(...data)); //can also do cities = data. change data type of cities to 'let' from 'const'
 
+//function will find matches on given input. Accepting 2 parameters: user i/p (wordToMatch) and array(cities)
+function findMatches(wordToMatch, cities){
+  return cities.filter(place => {
+    const regex = new RegExp(wordToMatch, 'gi'); //creating regex. g=global and i= case insensitive
+
+    return place.city.match(regex) || place.state.match(regex); //'city' and place 'data' are given. Inspect the data fetched from the URL.
+    // will check for the place or state.
+
+  });
+}
+
+//function to display matches found...
+  function displayMatches(){
+    const matchArray = findMatches(this.value, cities);
+    const html = matchArray.map(place => {
+      const regex = new RegExp(this.value, 'gi');
+    const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+    const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
+      return `
+      <li>
+        <span> ${cityName}, ${stateName}</span>
+        <span> ${place.population}</span>
+      </li>
+      ;`
+    }). join(''); // map() will return an array. using 'join()' to convert it to string
+
+    suggestions.innerHTML = html;
+  }
+
+// check HTML and CSS
+  const searchInput = document.querySelector('.search');
+  const suggestions = document.querySelector('.suggestions');
+
+  searchInput.addEventListener('change',displayMatches); // look for change Event
+  searchInput.addEventListener('keyup',displayMatches);// When key is up. Search Event is only fired when typing is done so added 'keyup' event in order to get continuous search result
+
 
 
 </script>
