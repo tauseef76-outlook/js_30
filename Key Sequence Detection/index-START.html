@@ -7,6 +7,19 @@
 </head>
 <body>
 <script>
+	let a = [];
+	const SecretCode = "alpha";
+	window.addEventListener("keydown", (e) => {
+		console.log(e.key);
+		a.push(e.key);
+		console.log(a);
+		a.splice(-SecretCode.length-1, a.length - SecretCode.length);
+
+	if (a.join('').includes(SecretCode)) {
+    console.log('DING DING!');
+    cornify_add();
+  }
+	});
 </script>
 </body>
 </html>
