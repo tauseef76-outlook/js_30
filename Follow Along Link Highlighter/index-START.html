@@ -27,6 +27,33 @@
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+
+
+    const triggers = document.querySelectorAll('a');    //getting all links
+    const highlight = document.createElement('span');   //creating highlighter
+    highlight.classList.add('highlight');               // adding highlight
+    document.body.appendChild(highlight);
+
+
+    triggers.forEach(a => a.addEventListener('mouseenter', highlightLink));  //will listen event when cursor goes over 'a' element and calls highlightLink()
+
+    function highlightLink() {
+      const linkCoords = this.getBoundingClientRect();    //gives the info/ coordinates of the elements. Where the elements are on the page....
+
+      console.log(linkCoords);
+      const coords = {
+        width: linkCoords.width,
+        height: linkCoords.height,      
+        top: linkCoords.top + window.scrollY,
+        left: linkCoords.left + window.scrollX    //the highlight was getting displaced. It was not highlighting actual element. So did some maths and added remaining coordinates and updated the coordinate values.
+      };
+
+      highlight.style.width = `${coords.width}px`;
+      highlight.style.height = `${coords.height}px`;
+      highlight.style.transform = `translate(${coords.left}px, ${coords.top}px)`;     //appliying style to elements width and height
+
+    }
+
   </script>
 </body>
 </html>
