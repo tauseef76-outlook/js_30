@@ -63,8 +63,10 @@
 
   function fixNav(){    //will fix nav on top. Check in inspector
     if(window.scrollY >= topOfNav){
+      document.body.style.paddingTop = nav.offsetHeight+'px'; // adding padding to body to remove jumpy effect
       document.body.classList.add('fixed-nav');
     }else {
+      document.body.style.paddingTop = 0;
       document.body.classList.remove('fixed-nav');
     }
   }
